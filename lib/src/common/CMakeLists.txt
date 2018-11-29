@@ -22,7 +22,7 @@ file(GLOB CXX_SOURCES "*.cc")
 file(GLOB C_SOURCES "*.c")
 
 add_library(srslte_common STATIC ${C_SOURCES} ${CXX_SOURCES})
-add_custom_target(gen_build_info COMMAND cmake -P ${CMAKE_BINARY_DIR}/SRSLTEbuildinfo.cmake)
+add_custom_target(gen_build_info COMMAND cmake -P ${PROJECT_BINARY_DIR}/SRSLTEbuildinfo.cmake)
 add_dependencies(srslte_common gen_build_info)
 
 target_include_directories(srslte_common PUBLIC ${SEC_INCLUDE_DIRS})
