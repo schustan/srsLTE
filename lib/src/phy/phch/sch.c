@@ -38,12 +38,18 @@
 #include "srslte/phy/utils/debug.h"
 #include "srslte/phy/utils/vector.h"
 
+#include "sse2neon.h"
+
 #define SRSLTE_PDSCH_MAX_TDEC_ITERS         10
 
 #ifdef LV_HAVE_SSE
-#include <immintrin.h>
+//#include <immintrin.h>
+//#include <emmintrin.h>
+
 #endif /* LV_HAVE_SSE */
 
+#include "sse2neon.h"
+#define LV_HAVE_SSE
 
 /* 36.213 Table 8.6.3-1: Mapping of HARQ-ACK offset values and the index signalled by higher layers */
 float beta_harq_offset[16] = {2.0, 2.5, 3.125, 4.0, 5.0, 6.250, 8.0, 10.0, 

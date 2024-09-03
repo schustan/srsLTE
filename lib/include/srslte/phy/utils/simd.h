@@ -37,6 +37,9 @@
 
 #ifdef HAVE_NEON
 #include <arm_neon.h>
+#include "sse2neon.h"
+#undef HAVE_NEON
+#define HAVE_SSE
 #endif
 
 /*
@@ -1350,7 +1353,8 @@ static inline simd_s_t srslte_simd_s_neg(simd_s_t a, simd_s_t b) {
   return _mm_sign_epi16(a, b);
 #else /* LV_HAVE_SSE */
 #ifdef HAVE_NEON
-  #error sign instruction not available in Neon
+  #warning sign instruction not available in Neon
+  return _mm_sign_epi16(a, b);
 #endif /* HAVE_NEON */
 #endif /* LV_HAVE_SSE */
 #endif /* LV_HAVE_AVX2 */
@@ -1823,7 +1827,9 @@ static inline simd_s_t srslte_simd_b_neg(simd_b_t a, simd_b_t b) {
   return _mm_sign_epi8(a, b);
 #else /* LV_HAVE_SSE */
 #ifdef HAVE_NEON
-  #error sign instruction not available in Neon
+  #warning sign instruction not available in Neon - using sse2neon impl
+  // sse should have same width as neon impl which it is mapped to - see code in sse2neon.h
+  return _mm_sign_epi8(a, b);
 #endif /* HAVE_NEON */
 #endif /* LV_HAVE_SSE */
 #endif /* LV_HAVE_AVX2 */

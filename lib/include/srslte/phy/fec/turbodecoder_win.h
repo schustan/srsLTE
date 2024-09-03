@@ -26,6 +26,11 @@
 
 #include "srslte/config.h"
 
+#ifdef __aarch64__
+#include "sse2neon.h"
+#define LV_HAVE_SSE
+#endif
+
 #define MAKE_FUNC(a) CONCAT2(CONCAT2(tdec_win,WINIMP),CONCAT2(_,a))
 #define MAKE_TYPE CONCAT2(CONCAT2(tdec_win_,WINIMP),_t)
 
@@ -35,7 +40,9 @@
   #error "Selected SSE window decoder but instruction set not supported"
   #endif
 
+  #ifndef __aarch64__
   #include <nmmintrin.h>
+  #endif
 
   #define WINIMP sse16
   #define nof_blocks 8
@@ -69,7 +76,9 @@
   #error "Selected AVX2 window decoder but instruction set not supported"
   #endif
 
+  #ifndef __aarch64__
   #include <immintrin.h>
+  #endif
 
   #define WINIMP avx16
   #define nof_blocks 16
@@ -100,7 +109,9 @@
   #error "Selected SSE window decoder but instruction set not supported"
   #endif
 
+  #ifndef __aarch64__
   #include <nmmintrin.h>
+  #endif
 
   #define WINIMP sse8
   #define nof_blocks 16

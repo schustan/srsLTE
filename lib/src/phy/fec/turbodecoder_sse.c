@@ -39,9 +39,13 @@
 #ifdef LV_HAVE_SSE
 #include <smmintrin.h>
 #include <srslte/phy/fec/turbodecoder_sse.h>
-
 #endif
 
+#ifdef __aarch64__
+#define LV_HAVE_SSE
+#include "sse2neon.h"
+#warning sse2neon turbodecoder
+#endif
 
 #define NUMSTATES       8
 #define NINPUTS         2
@@ -49,6 +53,8 @@
 #define TOTALTAIL       12
 
 #define INF 10000
+
+
 
 
 #ifdef LV_HAVE_SSE

@@ -33,6 +33,11 @@
 #include "srslte/phy/utils/vector.h"
 #include "srslte/phy/fec/turbodecoder.h"
 
+#ifdef __aarch64__
+#include "sse2neon.h"
+#define LV_HAVE_SSE
+#endif
+
 #define debug_enabled 0
 
 /* Generic (no SSE) implementation */
