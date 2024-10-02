@@ -38,14 +38,17 @@
 #include "srslte/phy/utils/debug.h"
 #include "srslte/phy/utils/vector.h"
 
+#ifdef __aarch64__
 #include "sse2neon.h"
+#endif
+
 
 #define SRSLTE_PDSCH_MAX_TDEC_ITERS         10
 
 #ifdef LV_HAVE_SSE
-//#include <immintrin.h>
-//#include <emmintrin.h>
-
+#ifndef __aarch64__
+#include <immintrin.h>
+#endif
 #endif /* LV_HAVE_SSE */
 
 #include "sse2neon.h"
