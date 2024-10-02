@@ -36,6 +36,9 @@
 
 #include <inttypes.h>
 
+#warning LV_HAVE_SSE FIXED TRUE
+#define LV_HAVE_SSE
+
 #ifdef LV_HAVE_SSE
 #include <smmintrin.h>
 #include <srslte/phy/fec/turbodecoder_sse.h>

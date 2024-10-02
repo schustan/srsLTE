@@ -344,19 +344,36 @@ int rf_soapy_open_multi(char *args, void **h, uint32_t nof_rx_antennas)
     for(int i = 0 ; i < numChannels ; i++) {
       rx_channels[i] = i;
     }
-    if(SoapySDRDevice_setupStream(handler->device, &(handler->rxStream), SOAPY_SDR_RX, SOAPY_SDR_CF32, rx_channels, numChannels, NULL) != 0) {
-      printf("Rx setupStream fail: %s\n", SoapySDRDevice_lastError());
-      return SRSLTE_ERROR;
-    }
+  
+  #if 0 // SOAPY_SDR_API_VERSION < 0x00080000
+  if (SoapySDRDevice_setupStream(handler->device, &(handler->rxStream), SOAPY_SDR_RX, SOAPY_SDR_CF32, rx_channels, numChannels, NULL) != 0) {
+		printf("Rx setupStream fail: %s\n", SoapySDRDevice_lastError());
+		return SRSLTE_ERROR;
+	}
+	#else
+  handler->rxStream = SoapySDRDevice_setupStream(handler->device, SOAPY_SDR_RX, SOAPY_SDR_CF32, rx_channels, numChannels, NULL);
+	if (handler->rxStream == NULL) {
+		printf("Rx setupStream fail: %s\n", SoapySDRDevice_lastError());
+		return SRSLTE_ERROR;
+	}
+	#endif
     handler->rx_mtu = SoapySDRDevice_getStreamMTU(handler->device, handler->rxStream);
   }
 
   if(SoapySDRDevice_getNumChannels(handler->device, SOAPY_SDR_TX) > 0){
     printf("Setting up TX stream\n");
+    #if 0 //SOAPY_SDR_API_VERSION < 0x00080000
     if (SoapySDRDevice_setupStream(handler->device, &(handler->txStream), SOAPY_SDR_TX, SOAPY_SDR_CF32, NULL, 0, NULL) != 0) {
-      printf("Tx setupStream fail: %s\n", SoapySDRDevice_lastError());
-      return SRSLTE_ERROR;
-    }
+  		printf("Tx setupStream fail: %s\n", SoapySDRDevice_lastError());
+  		return SRSLTE_ERROR;
+  	}
+  	#else
+    handler->txStream = SoapySDRDevice_setupStream(handler->device, SOAPY_SDR_TX, SOAPY_SDR_CF32, NULL, 0, NULL);
+  	if (handler->txStream == NULL) {
+  		printf("Tx setupStream fail: %s\n", SoapySDRDevice_lastError());
+  		return SRSLTE_ERROR;
+  	}
+  	#endif
     handler->tx_mtu = SoapySDRDevice_getStreamMTU(handler->device, handler->txStream);
   }
 

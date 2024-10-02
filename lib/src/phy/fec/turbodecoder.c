@@ -38,6 +38,9 @@
 #define LV_HAVE_SSE
 #endif
 
+#warning FIXING DEFINE FOR SSE
+#define LV_HAVE_SSE
+
 #define debug_enabled 0
 
 /* Generic (no SSE) implementation */
@@ -65,7 +68,7 @@ srslte_tdec_16bit_impl_t sse_impl = {
 #define WINIMP_IS_SSE16
 #include "srslte/phy/fec/turbodecoder_win.h"
 #undef WINIMP_IS_SSE16
-
+#warning sse16_win_impl: IMPLEMENTATION IS SSE
 srslte_tdec_16bit_impl_t sse16_win_impl = {
     tdec_winsse16_init,
     tdec_winsse16_free,
@@ -94,7 +97,6 @@ srslte_tdec_16bit_impl_t avx16_win_impl = {
 #define WINIMP_IS_SSE8
 #include "srslte/phy/fec/turbodecoder_win.h"
 #undef WINIMP_IS_SSE8
-
 srslte_tdec_8bit_impl_t sse8_win_impl = {
     tdec_winsse8_init,
     tdec_winsse8_free,

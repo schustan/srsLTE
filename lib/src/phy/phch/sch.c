@@ -45,14 +45,19 @@
 
 #define SRSLTE_PDSCH_MAX_TDEC_ITERS         10
 
+#warning fixed LV_HAVE_SSE
+#define LV_HAVE_SSE
+
 #ifdef LV_HAVE_SSE
 #ifndef __aarch64__
 #include <immintrin.h>
 #endif
 #endif /* LV_HAVE_SSE */
 
+#ifdef __arch64__
 #include "sse2neon.h"
-#define LV_HAVE_SSE
+#endif
+
 
 /* 36.213 Table 8.6.3-1: Mapping of HARQ-ACK offset values and the index signalled by higher layers */
 float beta_harq_offset[16] = {2.0, 2.5, 3.125, 4.0, 5.0, 6.250, 8.0, 10.0, 
