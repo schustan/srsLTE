@@ -80,7 +80,7 @@ option(ENABLE_MSAN     "Enable clang memory sanitizer"            OFF)
 
 option(USE_LTE_RATES   "Use standard LTE sampling rates"          OFF)
 
-set(GCC_ARCH native CACHE STRING "GCC compile for specific architecture.")
+set(GCC_ARCH corei7 CACHE STRING "GCC compile for specific architecture.")
 
 
 ########################################################################
