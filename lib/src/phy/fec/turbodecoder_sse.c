@@ -39,16 +39,20 @@
 #warning LV_HAVE_SSE FIXED TRUE
 #define LV_HAVE_SSE
 
-#ifdef LV_HAVE_SSE
-#include <smmintrin.h>
-#include <srslte/phy/fec/turbodecoder_sse.h>
-#endif
-
 #ifdef __aarch64__
 #define LV_HAVE_SSE
 #include "sse2neon.h"
 #warning sse2neon turbodecoder
 #endif
+
+
+#ifdef LV_HAVE_SSE
+#ifndef __aarch64__
+#include <smmintrin.h>
+#endif
+#include <srslte/phy/fec/turbodecoder_sse.h>
+#endif
+
 
 #define NUMSTATES       8
 #define NINPUTS         2
