@@ -345,7 +345,7 @@ int rf_soapy_open_multi(char *args, void **h, uint32_t nof_rx_antennas)
       rx_channels[i] = i;
     }
   
-  #if 0 // SOAPY_SDR_API_VERSION < 0x00080000
+  #if SOAPY_SDR_API_VERSION < 0x00080000
   if (SoapySDRDevice_setupStream(handler->device, &(handler->rxStream), SOAPY_SDR_RX, SOAPY_SDR_CF32, rx_channels, numChannels, NULL) != 0) {
 		printf("Rx setupStream fail: %s\n", SoapySDRDevice_lastError());
 		return SRSLTE_ERROR;
@@ -362,7 +362,7 @@ int rf_soapy_open_multi(char *args, void **h, uint32_t nof_rx_antennas)
 
   if(SoapySDRDevice_getNumChannels(handler->device, SOAPY_SDR_TX) > 0){
     printf("Setting up TX stream\n");
-    #if 0 //SOAPY_SDR_API_VERSION < 0x00080000
+    #if SOAPY_SDR_API_VERSION < 0x00080000
     if (SoapySDRDevice_setupStream(handler->device, &(handler->txStream), SOAPY_SDR_TX, SOAPY_SDR_CF32, NULL, 0, NULL) != 0) {
   		printf("Tx setupStream fail: %s\n", SoapySDRDevice_lastError());
   		return SRSLTE_ERROR;
